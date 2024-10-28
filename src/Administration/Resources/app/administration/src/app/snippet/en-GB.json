@@ -1626,5 +1626,20 @@
     "datetime": {
       "placeholder": "Select date and time..."
     }
+  },
+  "sw-sorting-select": {
+    "sortBy": {
+      "label": {
+        "name": "Name",
+        "createdAt": "Creation date",
+        "updatedAt": "Modification date"
+      }
+    },
+    "sortDirection": {
+      "label": {
+        "ASC": "ascending",
+        "DESC": "descending"
+      }
+    }
   }
 }

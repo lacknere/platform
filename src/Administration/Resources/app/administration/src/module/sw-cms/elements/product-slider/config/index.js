@@ -111,6 +111,26 @@ export default {
                 },
             ];
         },
+
+        productStreamSortingSortBy() {
+            if (typeof this.element.config.productStreamSorting.value !== 'string') {
+                return null;
+            }
+
+            if (!this.element.config.productStreamSorting.value.includes(':')) {
+                return this.element.config.productStreamSorting.value;
+            }
+
+            return this.element.config.productStreamSorting.value.split(':')[0];
+        },
+
+        productStreamSortingSortDirection() {
+            if (typeof this.element.config.productStreamSorting.value !== 'string' || !this.element.config.productStreamSorting.value.includes(':')) {
+                return null;
+            }
+
+            return this.element.config.productStreamSorting.value.split(':')[1];
+        }
     },
 
     created() {
@@ -201,6 +221,11 @@ export default {
 
         isSelected(itemId) {
             return this.productCollection.has(itemId);
+        },
+
+        onProductStreamSortingChanged({ value }) {
+            console.log(value);
+            this.element.config.productStreamSorting.value = value;
         },
     },
 };

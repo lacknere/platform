@@ -108,6 +108,15 @@
                             :options="productStreamSortingOptions"
                             show-clearable-button
                         />
+                        <sw-sorting-select
+                            component="sw-single-select"
+                            :sort-by="productStreamSortingSortBy"
+                            :sort-direction="productStreamSortingSortDirection"
+                            :sort-options="productStreamSortingOptions"
+                            :label="$tc('sw-cms.elements.productSlider.config.label.productStreamSorting')"
+                            @sorting-changed="onProductStreamSortingChanged"
+                        />
+
                         {% endblock %}
 
                         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
