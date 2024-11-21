@@ -1,0 +1,61 @@
+<sw-page class="sw-settings-state-machine-list">
+    <template #smart-bar-header>
+        <h2>
+            {{ $tc('sw-settings.index.title') }}
+            <sw-icon
+                name="regular-chevron-right-xs"
+                small
+            />
+            {{ $tc('sw-settings-state-machine.general.mainMenuItemGeneral') }}
+
+            <span
+                v-if="!isLoading"
+                class="sw-page__smart-bar-amount"
+            >
+                ({{ total }})
+            </span>
+        </h2>
+    </template>
+
+    <template #language-switch>
+        <sw-language-switch
+            @on-change="onChangeLanguage"
+        />
+    </template>
+
+    <template #content>
+        <sw-card-view>
+            <sw-card
+                position-identifier="sw-settings-state-machine-list-content"
+                :is-loading="isLoading"
+            >
+                <template #grid>
+                    <sw-data-grid
+                        class="sw-settings-state-machine-list-grid"
+                        :is-loading="isLoading"
+                        :data-source="stateMachines"
+                        :columns="stateMachineColumns"
+                        :show-selection="false"
+                        :allow-inline-edit="acl.can('state_machine.editor')"
+                        :skeleton-item-amount="stateMachines.length"
+                        @inline-edit-save="onInlineEditSave"
+                        @inline-edit-cancel="onInlineEditCancel"
+                    >
+                        <template #actions="{ item }">
+                            <sw-context-menu-item
+                                class="sw-settings-state-machine__edit-action"
+                                :disabled="!acl.can('state_machine.editor')"
+                                :router-link="{
+                                    name: 'sw.settings.state.machine.detail',
+                                    params: { id: item.id }
+                                }"
+                            >
+                                {{ $tc('global.default.edit') }}
+                            </sw-context-menu-item>
+                        </template>
+                    </sw-data-grid>
+                </template>
+            </sw-card>
+        </sw-card-view>
+    </template>
+</sw-page>

@@ -1,0 +1,41 @@
+<sw-modal
+    class="sw-settings-state-machine-state-modal__settings-modal"
+    :title="$tc('sw-settings-state-machine.state.detail.stateMachineStateCardTitle')"
+    @modal-close="$emit('modal-close')"
+>
+    <sw-container
+        columns="1fr 1fr"
+        gap="0px 32px"
+    >
+        <sw-text-field
+            v-model:value="stateMachineState.name"
+            :label="$tc('sw-settings-state-machine.state.detail.labelName')"
+            :error="stateMachineStateNameError"
+            required
+        />
+
+        <sw-text-field
+            v-model:value="stateMachineState.technicalName"
+            :label="$tc('sw-settings-state-machine.state.detail.labelTechnicalName')"
+            :disabled="true"
+            required
+        />
+    </sw-container>
+
+    <template #modal-footer>
+        <sw-button
+            size="small"
+            @click="onCancel"
+        >
+            {{ $tc('sw-settings-state-machine.state.detail.buttonCancel') }}
+        </sw-button>
+
+        <sw-button
+            variant="primary"
+            size="small"
+            @click="onSave"
+        >
+            {{ $tc('sw-settings-state-machine.state.detail.buttonSave') }}
+        </sw-button>
+    </template>
+</sw-modal>
