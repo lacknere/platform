@@ -62,8 +62,6 @@ export default {
 
             criteria.addSorting(Criteria.sort('priority', 'DESC'));
 
-            criteria.addFilter(Criteria.equals('locked', false));
-
             return criteria;
         },
 
@@ -71,8 +69,6 @@ export default {
             const criteria = new Criteria(1, 25);
 
             criteria.addSorting(Criteria.sort('priority', 'DESC'));
-
-            criteria.addFilter(Criteria.equals('locked', false));
 
             criteria.addFilter(Criteria.contains('label', this.productSortingOptionsSearchTerm));
 
@@ -361,10 +357,6 @@ export default {
             return fieldName.replace(/customFields\./, '');
         },
 
-        isProductSortingEditable(item) {
-            return !item.locked;
-        },
-
         onChangeLanguage() {
             this.fetchProductSortingOptions();
         },
@@ -398,6 +390,21 @@ export default {
 
         onLoadingChanged(loading) {
             this.isLoading = loading;
+        },
+
+        allowProductSortingOptionDelete(productSortingOption) {
+            return !(productSortingOption.locked || this.isItemDefaultSorting(productSortingOption.id));
+        },
+
+        getProductSortingOptionDeleteTooltip(item) {
+            const state = item.locked ? 'locked' : 'default';
+            const snippetKey = `sw-settings-listing.index.productSorting.grid.deleteTooltip.${state}`;
+
+            return {
+                showDelay: 300,
+                message: this.$tc(snippetKey),
+                disabled: this.allowProductSortingOptionDelete(item),
+            };
         },
     },
 };

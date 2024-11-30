@@ -16,7 +16,7 @@
         {% block sw_settings_listing_option_general_info_name %}
         <sw-text-field
             v-model:value="sortingOption.label"
-            class="sw-settings-listing-edit__general-input"
+            class="sw-settings-listing-option-general-info__field-name"
             :label="$tc('sw-settings-listing.base.general.labelName')"
             :placeholder="$tc('sw-settings-listing.base.general.placeholderName')"
             :required="true"
@@ -31,6 +31,7 @@
             name="sw-field--listing-option-technicalName"
             class="sw-settings-listing-option-general-info__field-technical-name"
             required
+            :disabled="sortingOption.locked"
             :label="$tc('sw-settings-listing.base.general.labelTechnicalName')"
             :placeholder="$tc('sw-settings-listing.base.general.placeholderTechnicalName')"
             :error="technicalNameError"
@@ -47,8 +48,8 @@
                 message: $tc('sw-cms.elements.productListing.config.sorting.defaultSortingCantBeDisabled'),
                 disabled: !isDefaultSorting
             }"
-            :disabled="isDefaultSorting"
-            class="sw-settings-listing-edit__general-input"
+            :disabled="isDefaultSorting || sortingOption.locked"
+            class="sw-settings-listing-option-general-info__field-active"
             :bordered="true"
             :label="$tc('sw-settings-listing.base.general.labelActive')"
         />

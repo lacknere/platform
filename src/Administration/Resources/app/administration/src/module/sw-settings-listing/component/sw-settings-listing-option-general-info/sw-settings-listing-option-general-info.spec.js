@@ -66,7 +66,7 @@ describe('src/module/sw-settings-listing/component/sw-settings-listing-option-ge
     });
 
     it('should display the correct name', async () => {
-        const textField = wrapper.find('.sw-settings-listing-edit__general-input input');
+        const textField = wrapper.find('.sw-settings-listing-option-general-info__field-name input');
 
         expect(textField.element.value).toBe('Price descending');
     });
@@ -74,7 +74,7 @@ describe('src/module/sw-settings-listing/component/sw-settings-listing-option-ge
     it('should display name error', async () => {
         await wrapper.setProps({ labelError: {} });
 
-        expect(wrapper.find('.sw-settings-listing-edit__general-input .sw-field__error').exists()).toBe(true);
+        expect(wrapper.find('.sw-settings-listing-option-general-info__field-name .sw-field__error').exists()).toBe(true);
     });
 
     it('should display the correct technical name', async () => {
@@ -92,14 +92,14 @@ describe('src/module/sw-settings-listing/component/sw-settings-listing-option-ge
     });
 
     it('should display the correct active state', async () => {
-        const switchField = wrapper.find('.sw-field--switch input');
+        const switchField = wrapper.find('.sw-settings-listing-option-general-info__field-active input');
         const isActive = switchField.element.value;
 
         expect(isActive).toBe('on');
     });
 
     it('should not disable active state switch on normal product sortings', async () => {
-        const switchField = wrapper.find('.sw-field--switch input');
+        const switchField = wrapper.find('.sw-settings-listing-option-general-info__field-active input');
         const isDisabled = switchField.attributes('disabled');
 
         expect(isDisabled).toBeUndefined();
@@ -108,9 +108,38 @@ describe('src/module/sw-settings-listing/component/sw-settings-listing-option-ge
     it('should disable active state switch on default sortings', async () => {
         await wrapper.setProps({ isDefaultSorting: true });
 
-        const switchField = wrapper.find('.sw-field--switch input');
+        const switchField = wrapper.find('.sw-settings-listing-option-general-info__field-active input');
         const isDisabled = switchField.attributes('disabled');
 
         expect(isDisabled).toBeDefined();
+    });
+
+    it('should disable untranslated fields on locked product sorting', async () => {
+        await wrapper.setProps({
+            sortingOption: {
+                label: 'Top result',
+                key: 'score',
+                fields: [
+                    {
+                        field: '_score',
+                        naturalSorting: 0,
+                        order: 'desc',
+                        priority: 1,
+                    },
+                ],
+                locked: true,
+            },
+        });
+
+        const untranslatedFields = [
+            '.sw-settings-listing-option-general-info__field-technical-name',
+            '.sw-settings-listing-option-general-info__field-active',
+        ];
+
+        untranslatedFields.forEach((field) => {
+            const isDisabled = wrapper.findComponent(field).vm.$attrs.disabled;
+
+            expect(isDisabled).toBe(true);
+        });
     });
 });

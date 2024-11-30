@@ -33,9 +33,26 @@
     {% endblock %}
 
     <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+    {% block sw_settings_listing_option_base_content %}
+    {# @deprecated tag:v6.7.0 - Block will be removed. Use `sw_settings_listing_option_base_content` instead. #}
+    <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
     {% block sw_settings_listing_option_base_smart_content %}
     <template #content>
+        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+        {% block sw_settings_listing_option_base_content_locked_info %}
+        <sw-alert
+            v-if="productSortingEntity?.locked"
+            class="sw-settings-listing-base__locked-info"
+            variant="info"
+            :title="$tc('global.default.info')"
+        >
+            {{ $tc('sw-settings-listing.base.lockedInfo') }}
+        </sw-alert>
+        {% endblock %}
 
+        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+        {% block sw_settings_listing_option_base_content_general_info %}
+        {# @deprecated tag:v6.7.0 - Block will be removed. Use `sw_settings_listing_option_base_content_general_info` instead. #}
         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
         {% block sw_settings_listing_option_base_smart_content_general_info %}
         <sw-settings-listing-option-general-info
@@ -46,7 +63,11 @@
             :technical-name-error="sortingOptionTechnicalNameError"
         />
         {% endblock %}
+        {% endblock %}
 
+        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+        {% block sw_settings_listing_option_base_content_criteria_grid %}
+        {# @deprecated tag:v6.7.0 - Block will be removed. Use `sw_settings_listing_option_base_content_criteria_grid` instead. #}
         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
         {% block sw_settings_listing_option_base_smart_bar_actions_grid %}
         <sw-settings-listing-option-criteria-grid
@@ -58,7 +79,11 @@
             @inline-edit-cancel="onCancelEditCriteria"
         />
         {% endblock %}
+        {% endblock %}
 
+        <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
+        {% block sw_settings_listing_option_base_content_delete_modal %}
+        {# @deprecated tag:v6.7.0 - Block will be removed. Use `sw_settings_listing_option_base_content_delete_modal` instead. #}
         <!-- eslint-disable-next-line sw-deprecation-rules/no-twigjs-blocks -->
         {% block sw_settings_listing_option_base_smart_bar_actions_grid_delete_modal %}
         <sw-settings-listing-delete-modal
@@ -69,7 +94,9 @@
             @delete="onConfirmDeleteCriteria"
         />
         {% endblock %}
+        {% endblock %}
     </template>
+    {% endblock %}
     {% endblock %}
 </sw-page>
 {% endblock %}
