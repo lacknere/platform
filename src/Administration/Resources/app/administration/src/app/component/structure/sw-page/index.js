@@ -89,6 +89,8 @@ Component.register('sw-page', {
         return {
             module: null,
             parentRoute: null,
+            previousPath: null,
+            previousRoute: null,
             sidebarOffset: 0,
             scrollbarOffset: 0,
             hasFullWidthHeader: false,
@@ -97,6 +99,16 @@ Component.register('sw-page', {
     },
 
     computed: {
+        routerBack() {
+            if (this.previousPath && this.previousRoute === this.parentRoute) {
+                return this.previousPath;
+            }
+
+            return {
+                name: this.parentRoute,
+            };
+        },
+
         pageColor() {
             if (this.headerBorderColor) {
                 return this.headerBorderColor;
@@ -252,6 +264,12 @@ Component.register('sw-page', {
 
             if (this.$route.meta.parentPath) {
                 this.parentRoute = this.$route.meta.parentPath;
+            }
+
+            this.previousPath = this.$router.options?.history?.state?.back;
+
+            if (this.previousPath) {
+                this.previousRoute = this.$router.resolve({ path: this.previousPath }).name;
             }
         },
     },
